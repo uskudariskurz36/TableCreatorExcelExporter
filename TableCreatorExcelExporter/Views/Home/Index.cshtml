@@ -1,0 +1,55 @@
+﻿@model IndexViewModel
+
+<div class="row mb-3">
+    <div class="col">
+        <h1 class="display-4">Table Creator & Excel Exporter</h1>
+        <hr />
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col">
+        <form method="post">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <textarea asp-for="TextData" class="form-control" rows="5"></textarea>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Create Table</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-12 mb-3">
+        <table class="table table-bordered table-striped table-sm table-hover">
+            <thead>
+                <tr>
+                    @foreach (string colname in Model.Columns)
+                    {
+                        <th>@colname</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (List<string> row in Model.Rows)
+                {
+                    <tr>
+                        @foreach (string data in row)
+                        {
+                            <td>@data</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-12">
+        <form method="post" asp-action="ExcelExport">
+            <textarea name="text" class="form-control d-none" rows="5">@Model.TextData</textarea>
+            <button class="btn btn-secondary" type="submit">Excel Export</button>
+        </form>
+    </div>
+</div>
